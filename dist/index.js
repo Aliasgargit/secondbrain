@@ -11,9 +11,14 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
 const middleware_1 = require("./middleware");
 const utils_1 = require("./utils");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const JWT_PASSWORD = "123123";
+app.use((0, cors_1.default)({
+    origin: "http://localhost:4200",
+    credentials: true
+}));
 app.post("/api/v1/signup", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -134,7 +139,7 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
     });
     console.log(link);
     const user = await db_1.UserModel.findOne({
-        userId: link.userId
+        _id: link.userId
     });
     if (!user) {
         return res.status(411).json({

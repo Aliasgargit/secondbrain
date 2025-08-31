@@ -7,10 +7,16 @@ import jwt from "jsonwebtoken";
 import { UserModel, ContentModel, LinkModel } from "./db";
 import { userMiddleware } from "./middleware";
 import { random } from "./utils";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 const JWT_PASSWORD = "123123";
+
+app.use(cors({
+  origin: "http://localhost:4200",
+  credentials: true
+}));
 
 app.post("/api/v1/signup", async (req, res) => {
 
